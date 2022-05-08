@@ -3,27 +3,29 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: kdi-noce <kdi-noce@student.42.fr>          +#+  +:+       +#+         #
+#    By: dino <dino@student.42.fr>                  +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/04/14 09:40:45 by kdi-noce          #+#    #+#              #
-#    Updated: 2022/05/06 17:12:56 by kdi-noce         ###   ########.fr        #
+#    Updated: 2022/05/07 16:47:10 by dino             ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-NAME 	= philo
-C		= clang
-CFLAG	= -Wall -Wextra -Werror -g3 -fsanitize=address
-SRC		= philo.c usec.c pilo.c
-OBJ		= $(SRC:.c=.o)
+NAME 	= 	philo
+C	= 	clang
+CC	=	gcc
+CFLAG	= 	-Wall -Wextra -g3 -fsanitize=address#-Werror -g3 -fsanitize=address
+SRC	= 	philo.c fct_annex.c
+OBJ	= 	$(SRC:.c=.o)
 
-all: 	  $(NAME)
+all:		$(NAME)
 
-$(NAME):  $(SRC)
-		  $(C) $(CFLAG) $(SRC) -o $(NAME) && time ./$(NAME)
+$(NAME):	$(SRC)
+#		$(C) $(CFLAG) $(SRC) -o $(NAME)
+		$(CC) $(CFLAG) $(SRC) -o $(NAME)
 
 clean:
 
 fclean:   
-		  rm $(NAME)
+		rm -f $(NAME)
 
-re:		  fclean all
+re:		fclean all

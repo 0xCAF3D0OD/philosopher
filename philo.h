@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   philo.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kdi-noce <kdi-noce@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dino <dino@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/14 15:48:58 by kdi-noce          #+#    #+#             */
-/*   Updated: 2022/05/06 17:32:24 by kdi-noce         ###   ########.fr       */
+/*   Updated: 2022/05/07 16:54:25 by dino             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@
 # include <pthread.h>
 # include <stdio.h>
 # include <sys/time.h>
+# include <stdlib.h>
 
 # define INITIAL_STOCK	20
 # define NB_CLIENT		5
@@ -41,5 +42,6 @@ typedef struct 			s_thread
 // 	time_t		tv_sec;
 // 	suseconds_t	tv_usec;
 // }				t_timeval;
+int	ft_atoi(char *nptr);
 
 #endif
