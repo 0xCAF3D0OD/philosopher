@@ -16,6 +16,12 @@
   "C_Cpp_Runner.enableWarnings": true,
 "C_Cpp_Runner.warningsAsError": false,
 "files.associations": {
-	"unistd.h": "c"
+	"unistd.h": "c",
+	"__locale": "c",
+	"array": "c",
+	"iterator": "c",
+	"string": "c",
+	"string_view": "c",
+	"vector": "c"
 }
 }

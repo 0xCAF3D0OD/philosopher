@@ -5,40 +5,31 @@
 #                                                     +:+ +:+         +:+      #
 #    By: kdi-noce <kdi-noce@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2022/04/14 09:40:45 by kdi-noce          #+#    #+#              #
-#    Updated: 2022/05/14 13:51:54 by kdi-noce         ###   ########.fr        #
+#    Created: 2021/11/12 16:35:10 by kdi-noce          #+#    #+#              #
+#    Updated: 2021/11/24 21:30:43 by kdi-noce         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-NAME 	= 	philo
-PRINTF	=	./printf/libftprintf.a
-C		= 	clang
-CC		=	gcc
-CFLAG	= 	-Wall -Wextra -Werror -g3 -fsanitize=address
-RM		= 	rm -rf
-SRC		= 	philo_main.c \
-			fct_annex.c
-#OBJ	= 	$(SRC:.c=.o)
+NAME = libftprintf.a 
+CC = gcc
+FLAGS = -Wall -Wextra -Werror
+OPTION = -c
+SRC = $(wildcard *.c)
+OBJ = $(SRC:.c=.o)
 
-all:		$(NAME)
+.c.o : ${CC} ${FLAGS} -c $< -o ${<:.c=.0}
 
-$(NAME):	$(SRC) $(PRINTF)
-#			$(C) $(CFLAG) $(SRC) -o $(NAME)
-			$(CC) $(CFLAG) $(SRC) $(PRINTF) -o $(NAME)
-		
-exec:		./time $(NAME)
+all: $(NAME)
 
-$(PRINTF):
-			make -C printf
-delet:		
-			$(RM) philo.dSYM
-			$(RM) .DS_Store
+$(NAME):	$(OBJ)
+	ar rc $(NAME) $(OBJ)
 
 clean:
-			make -C printf clean
+	/bin/rm -f $(OBJ)
+fclean: clean
+	/bin/rm -f $(NAME)
+	
 
-fclean:   
-			rm -f $(NAME)
-			make -C $(PRINTF) fclean
+re: fclean all
 
-re:			fclean all
+.PHONY: clean fclean re all
