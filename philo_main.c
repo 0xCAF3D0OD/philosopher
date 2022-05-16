@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   philo_main.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kdi-noce <kdi-noce@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dino <dino@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/13 16:25:25 by kdi-noce          #+#    #+#             */
-/*   Updated: 2022/05/14 17:34:21 by kdi-noce         ###   ########.fr       */
+/*   Updated: 2022/05/14 23:21:43 by dino             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,10 +22,13 @@ void init_value_philo(char **av, t_data *rules)
 	while (++i < rules->number_of_philosopher)
 	{
 		ft_printf("%d\n", i);
-		// rules[i].left_fork_id = i;
-		rules->philo[i].left_fork_id = (i + 1) % rules->number_of_philosopher;
+		rules->philo[i].id = i;
+		rules->philo[i].right_fork_id = i;
 		pthread_mutex_init(&rules->philo[i].left_fork_id, NULL);
-		printf("right = %d\n", rules->philo[i].left_fork_id);
+		rules->philo[i].left_fork_id = (i + 1) % rules->number_of_philosopher;
+		pthread_mutex_init(&rules->philo[i].right_fork_id, NULL);
+		// printf("left = %d\n", rules->philo[i].left_fork_id);
+		// printf("right = %d\n", rules->philo[i].right_fork_id);
 	}
 }
 
@@ -81,9 +84,6 @@ void	init_value_av(char **av, t_data **rules)
 }
 int	condition_error(int ac, char **av)
 {
-	int i;
-
-	i = 0;
 	if (ac < 2)
 		return (1);
 	if (ft_atoi(av[1]) == 1)
@@ -99,6 +99,6 @@ int	main(int ac, char **av)
 		return (1);
 	init_value_av(av, &rules);
 	init_value_philo(av, rules);
-	manage_thread();
+	// manage_thread();
 	return (0);
 }

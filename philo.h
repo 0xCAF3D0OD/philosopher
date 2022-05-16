@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   philo.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kdi-noce <kdi-noce@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dino <dino@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/14 15:48:58 by kdi-noce          #+#    #+#             */
-/*   Updated: 2022/05/14 15:50:05 by kdi-noce         ###   ########.fr       */
+/*   Updated: 2022/05/14 23:15:47 by dino             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,15 +20,15 @@
 # include <unistd.h>
 # include "printf/ft_printf.h"
 
-# define INITIAL_STOCK	20
-# define NB_CLIENT		5
+// # define INITIAL_STOCK	20
+// # define NB_CLIENT		5
 
 typedef struct		s_philosopher
 {
 	int				id;
 	int				x_ate;
-	int				left_fork_id;
-	int				right_fork_id;
+	pthread_mutex_t	*left_fork_id;
+	pthread_mutex_t	*right_fork_id;
 	long long		t_last_meal;
 	// struct s_rules	*rules;
 	pthread_t		thread_id;
@@ -48,9 +48,9 @@ typedef struct		s_data
 typedef struct 			s_thread
 {
 	int					stock;
-	pthread_t			new_thread;
-	pthread_mutex_t		fork_g;
-	pthread_mutex_t		fork_d;
+	pthread_t			*new_thread;
+	pthread_mutex_t		*fork_g;
+	pthread_mutex_t		*fork_d;
 }						t_thread;
 
 // typedef struct 	s_timeval
