@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: dino <dino@student.42.fr>                  +#+  +:+       +#+         #
+#    By: kdi-noce <kdi-noce@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/04/14 09:40:45 by kdi-noce          #+#    #+#              #
-#    Updated: 2022/05/14 18:39:12 by dino             ###   ########.fr        #
+#    Updated: 2022/05/16 10:03:15 by kdi-noce         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,7 +14,7 @@ NAME 	= 	philo
 PRINTF	=	./printf/libftprintf.a
 C		= 	clang
 CC		=	gcc
-CFLAG	= 	-Wall -Wextra -g3 -fsanitize=address
+CFLAG	= 	-Wall -Wextra -Werror -g3 -fsanitize=address
 RM		= 	rm -rf
 SRC		= 	philo_main.c \
 			fct_annex.c

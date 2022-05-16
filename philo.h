@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   philo.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dino <dino@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: kdi-noce <kdi-noce@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/14 15:48:58 by kdi-noce          #+#    #+#             */
-/*   Updated: 2022/05/14 23:15:47 by dino             ###   ########.fr       */
+/*   Updated: 2022/05/16 14:41:28 by kdi-noce         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,26 +23,25 @@
 // # define INITIAL_STOCK	20
 // # define NB_CLIENT		5
 
-typedef struct		s_philosopher
+typedef struct		s_philos
 {
 	int				id;
 	int				x_ate;
-	pthread_mutex_t	*left_fork_id;
-	pthread_mutex_t	*right_fork_id;
+	int				*left_fork_id;
+	int				*right_fork_id;
 	long long		t_last_meal;
-	// struct s_rules	*rules;
 	pthread_t		thread_id;
-}					t_philosopher;
+}					t_philos;
 
 typedef struct		s_data
 {
-	int				number_of_philosopher;
-	int				fork;
+	int				numb_of_philo;
 	int				time_to_die;
 	int				time_eat;
 	int				time_to_sleep;
 	int				*table;
-	t_philosopher	*philo;
+	t_philos		*philo;
+	pthread_mutex_t	*forks;
 }					t_data;
 
 typedef struct 			s_thread
