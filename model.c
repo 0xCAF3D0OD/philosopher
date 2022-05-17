@@ -94,14 +94,6 @@ int			ft_atoi(const char *str)
 	return ((int)(n * sign));
 }
 
-long long	timestamp(void)
-{
-	struct timeval	t;
-
-	gettimeofday(&t, NULL);
-	return ((t.tv_sec * 1000) + (t.tv_usec / 1000));
-}
-
 long long	time_diff(long long past, long long pres)
 {
 	return (pres - past);
@@ -127,6 +119,56 @@ int	error_manager(int error)
 	if (error == 2)
 		return (write_error("Fatal error when intializing mutex"));
 	return (1);
+}
+
+long long	timestamp(void)
+{
+	struct timeval	t;
+
+	gettimeofday(&t, NULL);
+	return ((t.tv_sec * 1000) + (t.tv_usec / 1000));
+}
+
+void	exit_launcher(t_rules *rules, t_philosopher *philos)
+{
+	int i;
+
+	i = -1;
+	while (++i < rules->nb_philo)
+		pthread_join(philos[i].thread_id, NULL);
+	i = -1;
+	while (++i < rules->nb_philo)
+		pthread_mutex_destroy(&(rules->forks[i]));
+	pthread_mutex_destroy(&(rules->writing));
+}
+
+void	death_checker(t_rules *r, t_philosopher *p)
+{
+	int i;
+
+	while (!(r->all_ate))
+	{
+		i = -1;
+		while (++i < r->nb_philo && !(r->dieded))
+		{
+			pthread_mutex_lock(&(r->meal_check));
+			if (time_diff(p[i].t_last_meal, timestamp()) > r->time_death)
+			{
+				action_print(r, i, "died");
+
+				r->dieded = 1;
+			}
+			pthread_mutex_unlock(&(r->meal_check));
+			usleep(100);
+		}
+		if (r->dieded)
+			break ;
+		i = 0;
+		while (r->nb_eat != -1 && i < r->nb_philo && p[i].x_ate >= r->nb_eat)
+			i++;
+		if (i == r->nb_philo)
+			r->all_ate = 1;
+	}
 }
 
 void		smart_sleep(long long time, t_rules *rules)
@@ -196,47 +238,6 @@ void	*p_thread(void *void_philosopher)
 		i++;
 	}
 	return (NULL);
-}
-
-void	exit_launcher(t_rules *rules, t_philosopher *philos)
-{
-	int i;
-
-	i = -1;
-	while (++i < rules->nb_philo)
-		pthread_join(philos[i].thread_id, NULL);
-	i = -1;
-	while (++i < rules->nb_philo)
-		pthread_mutex_destroy(&(rules->forks[i]));
-	pthread_mutex_destroy(&(rules->writing));
-}
-
-void	death_checker(t_rules *r, t_philosopher *p)
-{
-	int i;
-
-	while (!(r->all_ate))
-	{
-		i = -1;
-		while (++i < r->nb_philo && !(r->dieded))
-		{
-			pthread_mutex_lock(&(r->meal_check));
-			if (time_diff(p[i].t_last_meal, timestamp()) > r->time_death)
-			{
-				action_print(r, i, "died");
-				r->dieded = 1;
-			}
-			pthread_mutex_unlock(&(r->meal_check));
-			usleep(100);
-		}
-		if (r->dieded)
-			break ;
-		i = 0;
-		while (r->nb_eat != -1 && i < r->nb_philo && p[i].x_ate >= r->nb_eat)
-			i++;
-		if (i == r->nb_philo)
-			r->all_ate = 1;
-	}
 }
 
 int		launcher(t_rules *rules)

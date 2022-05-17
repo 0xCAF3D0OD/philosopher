@@ -6,21 +6,50 @@
 /*   By: kdi-noce <kdi-noce@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/13 16:25:25 by kdi-noce          #+#    #+#             */
-/*   Updated: 2022/05/16 17:10:43 by kdi-noce         ###   ########.fr       */
+/*   Updated: 2022/05/17 18:39:44 by kdi-noce         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
+void	ft_eating(t_philos *philo)
+{
+	t_data *rules;
+
+	rules = (t_data *) philo->rules;
+	
+	pthread_mutex_lock(&(rules->forks[*philo->left_fork_id]));
+	pthread_mutex_lock(&(rules->forks[*philo->right_fork_id]));
+	printf("is eating\n");
+	pthread_mutex_unlock(&(rules->forks[*philo->left_fork_id]));
+	pthread_mutex_unlock(&(rules->forks[*philo->right_fork_id]));
+}
+
+void	*ft_thread(void *philo_void)
+{
+	t_philos	*philos;
+	t_data		*rules;
+	int i = 0;
+
+	rules = (t_data*) philo_void;
+	philos = rules->philo;
+	while (i < 5)
+	{
+		ft_eating(philos);
+	}
+	return (NULL);
+}
+
 void	init_thread(t_data *rules)
 {
 	int	i;
 
-	i = rules->numb_of_philo;
-	while(--i >= 0)
+	i = 0;
+	while(++i <= rules->numb_of_philo)
 	{
-		pthread_create()
+		pthread_create(&rules->philo[i].thread_id, NULL, ft_thread, rules);
 	}
+
 }
 
 void	init_value_philo(char **av, t_data *rules)
@@ -39,25 +68,28 @@ void	init_value_philo(char **av, t_data *rules)
 		rules->philo[i].left_fork_id = &i;
 		result = (i + 1) % rules->numb_of_philo;
 		rules->philo[i].right_fork_id = &result;
-		// printf("left = %d\n", rules->philo[i].left_fork_id);
-		// printf("right = %d\n", rules->philo[i].right_fork_id);
 	}
 }
 
 int	mutex_init(t_data *rules)
 {
 	int	i;
+	int ret;
+	(void) rules;
 
-	i = -1;
+ 	i = -1;
+	ret = 0;
+	ret = pthread_mutex_init(&(rules->forks[i]), NULL);
 	while (++i <= rules->numb_of_philo)
 	{
+		printf("%d", i);
 		if (pthread_mutex_init(&(rules->forks[i]), NULL))
 			return (1);
 	}
 	return (0);
 }
 
-void	init_value_av(char **av, t_data **rules)
+int	init_value_av(char **av, t_data **rules)
 {
 	*rules = (t_data *) malloc(sizeof(t_data));
 	(*rules)->numb_of_philo = ft_atoi(av[1]);
@@ -66,11 +98,9 @@ void	init_value_av(char **av, t_data **rules)
 	(*rules)->time_to_sleep = ft_atoi(av[4]);
 	(*rules)->philo = (t_philos *) malloc(sizeof(t_philos)
 			* (*rules)->numb_of_philo);
-	// init_struct(rules);
-	// if (!(init_time_rules(*rules) == 0))
-	// 	printf("wrong\n");
 	if (mutex_init(*rules))
-		return 1;
+		return (1);
+	return (0);
 }
 
 int	condition_error(int ac, char **av)
@@ -85,14 +115,13 @@ int	condition_error(int ac, char **av)
 int	main(int ac, char **av)
 {
 	t_data		*rules;
-	t_thread	*thread;
 
 	printf("welcome to the philosopher problem!\n");
 	if (condition_error(ac, av))
 		return (printf("wrong input = 4 input required && mini 2 philo\n"));
 	init_value_av(av, &rules);
 	init_value_philo(av, rules);
-	init_thread(rules, thread);
+	init_thread(rules);
 	// manage_thread();
 	return (0);
 }

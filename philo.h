@@ -6,7 +6,7 @@
 /*   By: kdi-noce <kdi-noce@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/14 15:48:58 by kdi-noce          #+#    #+#             */
-/*   Updated: 2022/05/16 14:41:28 by kdi-noce         ###   ########.fr       */
+/*   Updated: 2022/05/17 18:46:00 by kdi-noce         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,26 +23,31 @@
 // # define INITIAL_STOCK	20
 // # define NB_CLIENT		5
 
+typedef struct s_data t_data;
+
 typedef struct		s_philos
 {
 	int				id;
 	int				x_ate;
+	int				first_time;
 	int				*left_fork_id;
 	int				*right_fork_id;
 	long long		t_last_meal;
+	t_data			*rules;
 	pthread_t		thread_id;
 }					t_philos;
 
-typedef struct		s_data
+struct		s_data
 {
 	int				numb_of_philo;
 	int				time_to_die;
 	int				time_eat;
 	int				time_to_sleep;
 	int				*table;
+	int				is_dead;
 	t_philos		*philo;
 	pthread_mutex_t	*forks;
-}					t_data;
+};
 
 typedef struct 			s_thread
 {
@@ -51,12 +56,6 @@ typedef struct 			s_thread
 	pthread_mutex_t		*fork_g;
 	pthread_mutex_t		*fork_d;
 }						t_thread;
-
-// typedef struct 	s_timeval
-// {
-// 	time_t		diff_sec;
-// 	suseconds_t	diff_usec;
-// }				t_timeval;
 
 int	ft_atoi(char *nptr);
 

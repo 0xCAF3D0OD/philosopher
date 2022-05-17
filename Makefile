@@ -6,7 +6,7 @@
 #    By: kdi-noce <kdi-noce@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/04/14 09:40:45 by kdi-noce          #+#    #+#              #
-#    Updated: 2022/05/16 10:03:15 by kdi-noce         ###   ########.fr        #
+#    Updated: 2022/05/17 14:15:46 by kdi-noce         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,8 +16,11 @@ C		= 	clang
 CC		=	gcc
 CFLAG	= 	-Wall -Wextra -Werror -g3 -fsanitize=address
 RM		= 	rm -rf
-SRC		= 	philo_main.c \
-			fct_annex.c
+SRC		= 	fct_annex.c	\
+			philosopher.c
+
+#philo_main.c \
+			
 #OBJ	= 	$(SRC:.c=.o)
 
 all:		$(NAME)
