@@ -6,7 +6,7 @@
 /*   By: kdi-noce <kdi-noce@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/14 15:48:58 by kdi-noce          #+#    #+#             */
-/*   Updated: 2022/05/17 18:46:00 by kdi-noce         ###   ########.fr       */
+/*   Updated: 2022/05/19 18:59:27 by kdi-noce         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,8 +30,8 @@ typedef struct		s_philos
 	int				id;
 	int				x_ate;
 	int				first_time;
-	int				*left_fork_id;
-	int				*right_fork_id;
+	pthread_mutex_t	*left_fork_id;
+	pthread_mutex_t	*right_fork_id;
 	long long		t_last_meal;
 	t_data			*rules;
 	pthread_t		thread_id;
@@ -43,7 +43,7 @@ struct		s_data
 	int				time_to_die;
 	int				time_eat;
 	int				time_to_sleep;
-	int				*table;
+	int				begining;
 	int				is_dead;
 	t_philos		*philo;
 	pthread_mutex_t	*forks;
