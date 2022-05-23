@@ -1,18 +1,60 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   philosopher.c                                      :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: kdi-noce <kdi-noce@student.42.fr>          +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/05/17 14:03:34 by kdi-noce          #+#    #+#             */
-/*   Updated: 2022/05/19 19:06:24 by kdi-noce         ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
 
 #include "philo.h"
 
-static int	init_time(void)
+void	ft_print(int ret)
+{
+	if (ret == 1)
+    	printf("wrong input or to much arguments\n");
+}
+
+void	*thread_manager(void *void_philos)
+{
+	t_data		*rules;
+	t_philos	*philos;
+	int			i;
+
+	i = 0;
+	philos = (t_philos*) void_philos;
+	rules = philos->rules;
+	while (!(rules->is_dead))
+	{
+		philos_is_eating(philos);
+	}
+}
+void	lauche_threads(t_data *rules, t_philos *philos)
+{
+	int	time;
+	int	i;
+
+	time = timestamp();
+	i = -1;
+	while (++i < rules->numb_of_philo)
+	{
+		pthread_create(&(philos[i].thread_id), NULL, thread_manager, &rules);
+		philos->t_last_meal = timestamp() - time;
+	}
+	ft_printf(" %d\n", philos->t_last_meal);
+	// while ()
+}
+
+void	lauche_mutex(t_data *rules)
+{
+	int	i;
+
+	i = -1;
+	while (++i < rules->numb_of_philo)
+	{
+		pthread_mutex_init(&(rules->forks[i]), NULL);
+	}
+}
+
+void	mutex_and_threads_function(t_data *rules, t_philos *philos)
+{
+	lauche_mutex(rules);
+	lauche_threads(rules, philos);
+}
+
+static int	init_timestamp(void)
 {
     struct timeval tv;
     int    time;
@@ -22,75 +64,19 @@ static int	init_time(void)
     return (time);
 }
 
-int        ft_time(void)
+int	timestamp(void)
 {
-    static int    time;
+	static int time;
 
-    if (time == 0)
-        time = init_time();
-    return (init_time() - time);
+	if (time == 0)
+		time = init_timestamp();
+	return (init_timestamp() - time);
 }
 
-int	is_he_dead(t_data *rules)
+void	init_info_philos(t_data *rules, t_philos *philos)
 {
-	int	time;
-
-	time = ft_time();
-	if ((ft_time() - time) > rules->time_to_die)
-		return (1);
-	return (0);
-}
-
-void	is_eating(t_data *rules, t_philos *philos)
-{
-	(void) rules;
-	(void) philos;
-	// pthread_mutex_lock(&(rules->forks[*philos->left_fork_id]));
-	// pthread_mutex_lock(&(rules->forks[*philos->right_fork_id]));
-	printf("is eating\n");
-	// pthread_mutex_unlock(&(rules->forks[*philos->right_fork_id]));
-	// pthread_mutex_unlock(&(rules->forks[*philos->left_fork_id]));
-}
-
-void	*ft_thread_mutex(void *void_thread)
-{
-	t_data		*rules;
-	t_philos	*philos;
-	int			i = -1;
-
-	rules = (t_data*) void_thread;
-	philos = rules->philo;
-	// if (philos->id % 2)
-	// 	usleep(15000);
-	while (++i < rules->numb_of_philo)
-	{
-		is_eating(rules, philos);
-	}
-	printf("fork = %d\n", (int) rules->forks);
-	return (NULL);
-}
-
-void	init_thread(t_data *rules, t_philos *philos)
-{
-	int	i;
-
-	i = -1;
-	while (++i < rules->numb_of_philo)
-	{
-		pthread_create(&(philos[i].thread_id), NULL, ft_thread_mutex, &rules);
-	}
-	while (rules->is_dead == 0 && rules.)
-	{
-		if (is_he_dead(rules) == 1)
-			break ;
-
-	}
-}
-
-void	init_philos_value(t_data *rules, t_philos *philos)
-{
-	int	i;
-
+	int i;
+	
 	i = -1;
 	while (++i < rules->numb_of_philo)
 	{
@@ -99,67 +85,52 @@ void	init_philos_value(t_data *rules, t_philos *philos)
 		if (i == rules->numb_of_philo)
 			philos[i].right_fork_id = &(rules->forks[0]);
 		else
-			philos[i].right_fork_id = &(rules->forks[i + 1]);
-		philos[i].first_time = 0;
+			philos[i].left_fork_id = &(rules->forks[i + 1]);
 	}
+	philos->t_last_meal = 0;
+	philos->x_ate = 0;
 }
 
-void	init_mutex(t_data *rules)
+int	condition_philosophers(char **av, t_data **rules, t_philos **philos)
 {
-	int	i;
-
-	i = -1;
-	while (++i <= rules->numb_of_philo)
-	{
-		pthread_mutex_init(&(rules->forks[i]), NULL);
-	}
+	*rules = (t_data*) malloc(sizeof(t_data));
+	(*rules)->numb_of_philo = ft_atoi(av[1]);
+	(*rules)->time_eat = ft_atoi(av[2]);
+	(*rules)->time_to_die = ft_atoi(av[3]);
+	(*rules)->time_to_sleep = ft_atoi(av[4]);
+	(*rules)->forks = malloc(sizeof(t_data) * (*rules)->numb_of_philo);
+	*philos = (t_philos*) malloc(sizeof(t_philos) * (*rules)->numb_of_philo);
+	(*philos)->left_fork_id = malloc(sizeof(t_philos) * (*rules)->numb_of_philo);
+	(*philos)->right_fork_id = malloc(sizeof(t_philos) * (*rules)->numb_of_philo);
+	init_info_philos(*rules, *philos);
+	timestamp();
+	return (rules);
 }
 
-void	init_arguments(t_data *rules, t_philos *philos, char **av)
+int	condition_erreur(int ac, char **av, t_data *rules, t_philos *philos)
 {
-	(void) philos;
-	rules = (t_data*) malloc(sizeof(t_data));
-	rules->numb_of_philo = ft_atoi(av[1]);
-	rules->time_eat = ft_atoi(av[2]);
-	rules->time_to_die = ft_atoi(av[3]);
-	rules->time_to_sleep = ft_atoi(av[4]);
-	rules->is_dead = 0;
-	rules->forks = malloc(sizeof(t_data*) * rules->numb_of_philo);
-	philos = malloc(sizeof(t_philos) * rules->numb_of_philo);
-	init_mutex(rules);
-	init_philos_value(rules, philos);
-	init_thread(rules, philos);
-}
+	(void)	av;
+	(void)	rules;
+	(void)	philos;
 
-void	print_error(int ret)
-{
-	if (ret == 1)
-		printf("wrong input => must be 5 arguments");
-	if (ret == 2)
-		printf("wrong input => 0 philosophe");
-}
-
-int	condition_error(int ac, char **av, t_data *rules)
-{
-	(void) rules;
-	if (ac != 5)
+	if (ac < 1 && ac > 5)
 		return (1);
-	if (ft_atoi(av[1]) < 1)
-		return (2);
 	return (0);
 }
 
-int main(int argc, char **argv)
+int	main (int argc, char **argv)
 {
-	t_data 		*rules;
-	t_philos	*philos;
-	int			ret;
+    t_data		*rules;
+    t_philos	*philos;
+    int			ret;
 
-	rules = NULL;
-	philos = NULL;
-	ft_time();
-	if ((ret = condition_error(argc, argv, rules)))
-		print_error(ret);
-	init_arguments(rules, philos, argv);
-	
+	ret = 0;
+    if ((ret = condition_erreur(argc, argv, rules, philos)))
+    	ft_print(ret);
+	condition_philosophers(argv, &rules, &philos);
+	mutex_and_threads_function(rules, philos);
+	free(rules->forks);
+	free(rules);
+	free(philos);
+	return (0);
 }
