@@ -6,7 +6,7 @@
 #    By: kdi-noce <kdi-noce@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/04/14 09:40:45 by kdi-noce          #+#    #+#              #
-#    Updated: 2022/05/23 14:07:12 by kdi-noce         ###   ########.fr        #
+#    Updated: 2022/05/24 19:03:48 by kdi-noce         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,10 +15,15 @@ PRINTF_DIR	=	printf
 PRINTF		= 	$(PRINTF_DIR)/libftprintf.a
 C			= 	clang
 CC			=	gcc
-CFLAG		= 	-Wall -Wextra -Wextra
+CFLAG		= 	-Wall -Wextra -Wextra -fsanitize=address -g3
 RM			= 	rm -rf
-SRC			= 	fct_annex.c	\
-				philosopher.c
+SRC			= 	philosopher.c	\
+				thread_mutex.c	\
+				check_fcts.c	\
+				print_philos.c	\
+				time_philo.c	\
+				fct_annex.c		\
+				
 
 #philo_main.c \
 			
