@@ -6,7 +6,7 @@
 /*   By: kdi-noce <kdi-noce@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/19 11:18:17 by kdi-noce          #+#    #+#             */
-/*   Updated: 2022/05/19 15:50:44 by kdi-noce         ###   ########.fr       */
+/*   Updated: 2022/05/26 19:52:23 by kdi-noce         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,6 @@ static int	init_time(void)
 
     gettimeofday(&tv, NULL);
     time = (tv.tv_usec * 1000) + (tv.tv_sec / 1000);
-	// time += tv.tv_usec / 1000;
-	// printf("TIME -> %d\n", time);
     return (time);
 }
 

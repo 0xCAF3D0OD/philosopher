@@ -6,30 +6,49 @@
 /*   By: kdi-noce <kdi-noce@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/24 09:24:55 by kdi-noce          #+#    #+#             */
-/*   Updated: 2022/05/24 17:30:15 by kdi-noce         ###   ########.fr       */
+/*   Updated: 2022/05/26 20:18:02 by kdi-noce         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-long long	check_if_dead(t_data *rules)
+int	check_if_dead(t_data *rules)
 {
-	long long	time;
-	long long	ret;
-	int			i;
-	
-	time = timestamp();
-	ret = 0;
-	i = -1;
-	// ft_printf("%d\n", rules->numb_of_philo);
-	while (++i < rules->numb_of_philo)
+	static int	dead;
+
+	if (dead == 0)
 	{
-		ret = timestamp() - time;
-		if (ret > rules->time_to_die)
-		{	
-			rules->philos->is_dead++;
-			break ;
+		if (timestamp() - rules->philos->t_last_meal > rules->time_to_die)
+		{
+			rules->philos->is_dead = 1;
 		}
 	}
-	return (0);
+	return (dead);
+}
+
+void	dead_fct(t_data *rules)
+{
+	int	i;
+
+	i = -1;
+	rules->philos->is_dead = 1;
+	while (++i != rules->numb_of_philo)
+	{
+		rules->philos[i].is_dead = 1;
+		pthread_mutex_unlock(rules->philos[i].left_fork_id);
+		pthread_mutex_unlock(rules->philos[i].right_fork_id);
+	}
+}
+
+int	eating_nb(t_data *rules)
+{
+	int	i;
+
+	i = 0;
+	while (i < rules->numb_of_philo)
+	{
+		if (rules->philos[i].x_ate != rules->nb_time_to_eat)
+			return (0);
+	}
+	return (1);
 }

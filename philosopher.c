@@ -19,28 +19,33 @@ void	init_info_philos(t_data *rules)
 	{
 		rules->philos[i].id = i;
 		rules->philos[i].left_fork_id = &(rules->forks[i]);
+		rules->philos[i].t_last_meal = 0;
+		rules->philos[i].x_ate = 0;
+		rules->philos[i].is_dead = 0;
 		if (i == rules->numb_of_philo)
 			rules->philos[i].right_fork_id = &(rules->forks[0]);
 		else
 			rules->philos[i].left_fork_id = &(rules->forks[i + 1]);
 	}
-	rules->philos->t_last_meal = 0;
-	rules->philos->x_ate = 0;
-	rules->philos->is_dead = 0;
+
 }
 
-void	condition_philosophers(char **av, t_data *rules)
+void	condition_philosophers(int ac, char **av, t_data *rules)
 {
 	rules->numb_of_philo = ft_atoi(av[1]);
 	rules->time_to_die = ft_atoi(av[2]);	
 	rules->time_eat = ft_atoi(av[3]);
 	rules->time_to_sleep = ft_atoi(av[4]);
+	if (ac == 6)
+		rules->nb_time_to_eat = ft_atoi(av[5]);
+	else
+		rules->nb_time_to_eat = -1;
 	rules->forks = malloc(sizeof(t_data) * rules->numb_of_philo);
-	rules->philos = (t_philos*) malloc(sizeof(t_philos) * rules->numb_of_philo);
 	rules->philos = (t_philos*) malloc(sizeof(t_philos) * rules->numb_of_philo);
 	rules->philos->left_fork_id = malloc(sizeof(t_philos) * rules->numb_of_philo);
 	rules->philos->right_fork_id = malloc(sizeof(t_philos) * rules->numb_of_philo);
 	init_info_philos(rules);
+	mutex_and_threads_function(rules);
 	timestamp();
 }
 
@@ -61,8 +66,7 @@ int	main (int argc, char **argv)
 	// pthread_mutex_init(&essais, NULL);
     if ((ret = condition_erreur(argc)))
     	ft_print(ret, 0);
-	condition_philosophers(argv, rules);
-	mutex_and_threads_function(rules);
+	condition_philosophers(argc, argv, rules);
 	free(rules->forks);
 	free(rules);
 	return (0);

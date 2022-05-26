@@ -6,7 +6,7 @@
 /*   By: kdi-noce <kdi-noce@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/14 15:48:58 by kdi-noce          #+#    #+#             */
-/*   Updated: 2022/05/24 17:01:04 by kdi-noce         ###   ########.fr       */
+/*   Updated: 2022/05/26 20:23:22 by kdi-noce         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,6 @@ typedef struct		s_philos
 {
 	int				id;
 	int				x_ate;
-	int				first_time;
 	int				is_dead;
 	long long		t_last_meal;
 	pthread_mutex_t	*left_fork_id;
@@ -48,6 +47,7 @@ struct		s_data
 	int				time_to_die;
 	int				time_eat;
 	int				time_to_sleep;
+	int				nb_time_to_eat;
 	pthread_mutex_t	*forks;
 	t_philos		*philos;
 };
@@ -65,7 +65,7 @@ int	ft_atoi(char *nptr);
 /*	philosopher_main	*/
 
 int		condition_erreur(int ac);
-void	condition_philosophers(char **av, t_data *rules);
+void	condition_philosophers(int ac, char **av, t_data *rules);
 void	init_info_philos(t_data *rules);
 void	mutex_and_threads_function(t_data *rules);
 
@@ -86,6 +86,8 @@ void	lauche_mutex(t_data *rules);
 
 /* check_fcts	*/
 
-long long	check_if_dead(t_data *rules);
+int		check_if_dead(t_data *rules);
+void	dead_fct(t_data *rules);
+int		eating_nb(t_data *rules);
 
 #endif
