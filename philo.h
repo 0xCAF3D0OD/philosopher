@@ -6,7 +6,7 @@
 /*   By: kdi-noce <kdi-noce@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/14 15:48:58 by kdi-noce          #+#    #+#             */
-/*   Updated: 2022/05/26 20:23:22 by kdi-noce         ###   ########.fr       */
+/*   Updated: 2022/05/27 17:42:22 by kdi-noce         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@
 // pointeur char *ptr;
 //			ptr = "salut";
 
-typedef struct s_data t_data;
+typedef struct s_rules t_rules;
 
 typedef struct		s_philos
 {
@@ -38,19 +38,25 @@ typedef struct		s_philos
 	pthread_mutex_t	*left_fork_id;
 	pthread_mutex_t	*right_fork_id;
 	pthread_t		thread_id;
-	t_data			*rules;
+	t_rules			*rules;
 }					t_philos;
 
-struct		s_data
+struct		s_rules
 {
 	int				numb_of_philo;
 	int				time_to_die;
 	int				time_eat;
 	int				time_to_sleep;
 	int				nb_time_to_eat;
+
+};
+
+typedef	struct		s_data
+{
 	pthread_mutex_t	*forks;
 	t_philos		*philos;
-};
+	t_rules			*rules;
+}					t_data;
 
 typedef struct 			s_thread
 {
@@ -65,9 +71,10 @@ int	ft_atoi(char *nptr);
 /*	philosopher_main	*/
 
 int		condition_erreur(int ac);
-void	condition_philosophers(int ac, char **av, t_data *rules);
-void	init_info_philos(t_data *rules);
-void	mutex_and_threads_function(t_data *rules);
+void	condition_rules_args(int ac, char **av, t_rules *rules);
+void	condition_philosophers(t_data *data, t_rules *rules);
+void	init_info_philos(t_data *data, t_rules *rules, t_philos *philos);
+void	mutex_and_threads_function(t_data *data, t_rules *rules, t_philos *philos);
 
 /*	time_philo	*/
 
@@ -81,13 +88,14 @@ void	ft_print(int ret, int i);
 /*	thread_mutex	*/
 
 void	*thread_manager(void *arg);
-void	lauche_threads(t_data *rules);
-void	lauche_mutex(t_data *rules);
+void	lauche_threads(t_data *data, t_rules *rules, t_philos *philos);
+void	lauche_mutex(t_data *data, t_rules *rules, t_philos *philos);
 
 /* check_fcts	*/
 
-int		check_if_dead(t_data *rules);
-void	dead_fct(t_data *rules);
-int		eating_nb(t_data *rules);
+int		check_if_dead(t_rules *rules, t_philos *philos, int i);
+void	dead_fct(t_rules *rules, t_philos *philos);
+int		eating_nb(t_rules *rules, t_philos *philos);
 
 #endif
+

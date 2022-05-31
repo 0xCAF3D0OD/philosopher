@@ -206,7 +206,7 @@ void	philo_eats(t_philosopher *philo)
 	action_print(rules, philo->id, "has taken a fork");
 	pthread_mutex_lock(&(rules->forks[philo->right_fork_id]));
 	action_print(rules, philo->id, "has taken a fork");
-	pthread_mutex_lock(&(rules->meal_check));
+	pthtexread_mu_lock(&(rules->meal_check));
 	action_print(rules, philo->id, "is eating");
 	philo->t_last_meal = timestamp();
 	pthread_mutex_unlock(&(rules->meal_check));
