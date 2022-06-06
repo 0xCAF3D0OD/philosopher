@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: kdi-noce <kdi-noce@student.42.fr>          +#+  +:+       +#+         #
+#    By: dino <dino@student.42.fr>                  +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/04/14 09:40:45 by kdi-noce          #+#    #+#              #
-#    Updated: 2022/05/27 13:59:51 by kdi-noce         ###   ########.fr        #
+#    Updated: 2022/06/03 23:09:25 by dino             ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,6 +16,7 @@ PRINTF		= 	$(PRINTF_DIR)/libftprintf.a
 C			= 	clang
 CC			=	gcc
 CFLAG		= 	-Wall -Wextra -Wextra -fsanitize=address -g3
+
 RM			= 	rm -rf
 SRC			= 	philosopher.c	\
 				thread_mutex.c	\

@@ -3,8 +3,11 @@
 
 void	mutex_and_threads_function(t_data *data, t_rules *rules, t_philos *philos)
 {
+	printf("3.6.1\n");
 	lauche_mutex(data, rules, philos);
+	printf("3.6.2\n");
 	lauche_threads(data, rules, philos);
+	printf("3.6.3\n");
 }
 
 void	init_info_philos(t_data *data, t_rules *rules, t_philos *philos)
@@ -30,13 +33,20 @@ void	init_info_philos(t_data *data, t_rules *rules, t_philos *philos)
 void	condition_philosophers(t_data *data, t_rules *rules)
 {
 	t_philos	*philos;
-	
+
+	printf("3.1\n");
 	data->forks = malloc(sizeof(t_data) * rules->numb_of_philo);
+	printf("3.2\n");
 	philos = (t_philos*) malloc(sizeof(t_philos) * rules->numb_of_philo);
+	printf("3.3\n");
 	philos->left_fork_id = malloc(sizeof(t_philos) * rules->numb_of_philo);
+	printf("3.4\n");
 	philos->right_fork_id = malloc(sizeof(t_philos) * rules->numb_of_philo);
+	printf("3.5\n");
 	init_info_philos(data, rules, philos);
+	printf("3.6\n");
 	mutex_and_threads_function(data, rules, philos);
+	printf("3.7\n");
 	timestamp();
 }
 
@@ -69,11 +79,16 @@ int	main (int argc, char **argv)
 	data = (t_data*) malloc(sizeof(t_data));
 	rules = (t_rules*) malloc(sizeof(t_rules));
 	// pthread_mutex_init(&essais, NULL);
+	printf("1\n");
     if ((ret = condition_erreur(argc)))
     	ft_print(ret, 0);
+	printf("2\n");
 	condition_rules_args(argc, argv, rules);
+	printf("3\n");
 	condition_philosophers(data, rules);
+	printf("4\n");	
 	free(data->forks);
 	free(rules);
+	free_philos(data);
 	return (0);
 }

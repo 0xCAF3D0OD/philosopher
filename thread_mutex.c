@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   thread_mutex.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kdi-noce <kdi-noce@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dino <dino@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/24 09:22:16 by kdi-noce          #+#    #+#             */
-/*   Updated: 2022/05/27 20:09:43 by kdi-noce         ###   ########.fr       */
+/*   Updated: 2022/06/06 02:34:23 by dino             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,25 +98,31 @@ void check_if_alright(t_rules *rules, t_philos *philos)
 	int i;
 
 	i = 0;
+	printf("3.6.2.2.1\n");
 	while (eating_nb(rules, philos) == 0 && philos[0].is_dead == 0)
 	{
+		//printf("3.6.2.2.2\n");
 		i = 0;
 		while(i < rules->numb_of_philo)
 		{
-			// if (check_if_dead(rules, &philos[i], i) == 1)
-			// {
-			// 	dead_fct(rules, philos);
-			// 	break;
-			// }
+			if (check_if_dead(rules, &philos[i], i) == 1)
+			{
+				dead_fct(rules, philos);
+				break ;
+			}
 			i++;
 		}
 	}
+	printf("3.6.2.2.4\n");
 	i = 0;
 	while (i < rules->numb_of_philo)
 	{
+		printf("in");
 		pthread_join(philos[i].thread_id, NULL);
 		i++;
 	}
+	free_philos(philos);
+	printf("3.6.2.2.5\n");
 }
 
 void	lauche_threads(t_data *data, t_rules *rules, t_philos *philos)
@@ -124,11 +130,14 @@ void	lauche_threads(t_data *data, t_rules *rules, t_philos *philos)
 	int	i;
 
 	i = -1;
+	printf("3.6.2.1\n");
 	while (++i < rules->numb_of_philo)
 	{
 		pthread_create(&(philos[i].thread_id), NULL, thread_manager, &philos[i]);
 	}
+	printf("3.6.2.2\n");
 	check_if_alright(rules, philos);
+	printf("3.6.2.3\n");
 }
 
 void	lauche_mutex(t_data *data, t_rules *rules, t_philos *philos)

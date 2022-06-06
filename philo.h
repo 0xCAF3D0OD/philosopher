@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   philo.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kdi-noce <kdi-noce@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dino <dino@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/14 15:48:58 by kdi-noce          #+#    #+#             */
-/*   Updated: 2022/05/27 17:42:22 by kdi-noce         ###   ########.fr       */
+/*   Updated: 2022/06/03 23:12:45 by dino             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,6 +96,7 @@ void	lauche_mutex(t_data *data, t_rules *rules, t_philos *philos);
 int		check_if_dead(t_rules *rules, t_philos *philos, int i);
 void	dead_fct(t_rules *rules, t_philos *philos);
 int		eating_nb(t_rules *rules, t_philos *philos);
+void	free_philos(t_philos *philos);
 
 #endif
 
