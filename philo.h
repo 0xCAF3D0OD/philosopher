@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   philo.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dino <dino@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: kdi-noce <kdi-noce@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/14 15:48:58 by kdi-noce          #+#    #+#             */
-/*   Updated: 2022/06/03 23:12:45 by dino             ###   ########.fr       */
+/*   Updated: 2022/06/06 16:04:54 by kdi-noce         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,7 @@ typedef struct		s_philos
 	int				x_ate;
 	int				is_dead;
 	long long		t_last_meal;
+	long long		t_sleep;
 	pthread_mutex_t	*left_fork_id;
 	pthread_mutex_t	*right_fork_id;
 	pthread_t		thread_id;
@@ -53,18 +54,9 @@ struct		s_rules
 
 typedef	struct		s_data
 {
-	pthread_mutex_t	*forks;
 	t_philos		*philos;
 	t_rules			*rules;
 }					t_data;
-
-typedef struct 			s_thread
-{
-	int					stock;
-	pthread_t			*new_thread;
-	pthread_mutex_t		*fork_g;
-	pthread_mutex_t		*fork_d;
-}						t_thread;
 
 int	ft_atoi(char *nptr);
 
@@ -73,8 +65,8 @@ int	ft_atoi(char *nptr);
 int		condition_erreur(int ac);
 void	condition_rules_args(int ac, char **av, t_rules *rules);
 void	condition_philosophers(t_data *data, t_rules *rules);
-void	init_info_philos(t_data *data, t_rules *rules, t_philos *philos);
-void	mutex_and_threads_function(t_data *data, t_rules *rules, t_philos *philos);
+void	init_info_philos(pthread_mutex_t *fork, t_rules *rules, t_philos *philos);
+void	mutex_and_threads_function(pthread_t *philo, t_data *data, t_rules *rules, t_philos *philos);
 
 /*	time_philo	*/
 
@@ -83,13 +75,22 @@ long long			timestamp(void);
 
 /*	print_philos	*/
 
-void	ft_print(int ret, int i);
+void	ft_print(int ret, int i, long long time);
 
 /*	thread_mutex	*/
 
 void	*thread_manager(void *arg);
-void	lauche_threads(t_data *data, t_rules *rules, t_philos *philos);
-void	lauche_mutex(t_data *data, t_rules *rules, t_philos *philos);
+void	check_if_alright(pthread_t *thread, t_rules *rules, t_philos *philos);
+void	launche_threads(pthread_t *thread, t_rules *rules, t_philos *philos);
+void	launche_mutex(pthread_mutex_t *fork, t_rules *rules);
+
+/*	ft_routine	*/
+
+void	ft_routine(t_philos *philos, t_rules *rules);
+void	ft_take_forks(t_philos *philos, t_rules *rules);
+void	ft_eat(t_philos *philos, t_rules *rules);
+void	ft_is_sleeping(t_philos *philos);
+void	ft_put_forks(t_philos *philos);
 
 /* check_fcts	*/
 

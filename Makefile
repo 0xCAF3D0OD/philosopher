@@ -3,20 +3,19 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: dino <dino@student.42.fr>                  +#+  +:+       +#+         #
+#    By: kdi-noce <kdi-noce@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/04/14 09:40:45 by kdi-noce          #+#    #+#              #
-#    Updated: 2022/06/03 23:09:25 by dino             ###   ########.fr        #
+#    Updated: 2022/06/06 14:38:23 by kdi-noce         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME 		= 	philo
 PRINTF_DIR	=	printf
 PRINTF		= 	$(PRINTF_DIR)/libftprintf.a
-C			= 	clang
+#C			= 	clang
 CC			=	gcc
-CFLAG		= 	-Wall -Wextra -Wextra -fsanitize=address -g3
-
+CFLAG		= 	-Wall -Wextra -Wextra -Werror -fsanitize=address -g3
 RM			= 	rm -rf
 SRC			= 	philosopher.c	\
 				thread_mutex.c	\
@@ -24,6 +23,7 @@ SRC			= 	philosopher.c	\
 				print_philos.c	\
 				time_philo.c	\
 				fct_annex.c		\
+				ft_routine.c
 				
 
 #philo_main.c \
