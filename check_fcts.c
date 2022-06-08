@@ -3,21 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   check_fcts.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kdi-noce <kdi-noce@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dino <dino@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/24 09:24:55 by kdi-noce          #+#    #+#             */
-/*   Updated: 2022/06/06 18:43:05 by kdi-noce         ###   ########.fr       */
+/*   Updated: 2022/06/08 17:59:44 by dino             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
-
-// void	free_philos(t_philos *philos)
-// {
-// 	free(philos->left_fork_id);
-// 	free(philos->right_fork_id);
-// 	free(philos);
-// }
 
 int	check_if_dead(t_rules *rules, t_philos *philos, int i)
 {
@@ -29,9 +22,9 @@ int	check_if_dead(t_rules *rules, t_philos *philos, int i)
 		if ((ret = timestamp() - philos->t_last_meal) > rules->time_to_die)
 		{
 			dead = 1;
-			ft_print(8, i, ret);
 			pthread_mutex_unlock(philos->left_fork_id);
 			pthread_mutex_unlock(philos->right_fork_id);
+			ft_print(8, i, ret, 0);
 		}
 	}
 	return (dead);
