@@ -6,7 +6,7 @@
 /*   By: kdi-noce <kdi-noce@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/24 09:22:16 by kdi-noce          #+#    #+#             */
-/*   Updated: 2022/06/06 18:23:17 by kdi-noce         ###   ########.fr       */
+/*   Updated: 2022/06/21 17:37:18 by kdi-noce         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@ void check_if_alright(pthread_t *thread, t_rules *rules, t_philos *philos)
 		{
 			if (check_if_dead(rules, &philos[i], i) == 1)
 			{
+				printf("Philo dead\n");
 				dead_fct(rules, philos);
 				break ;
 			}
@@ -33,7 +34,6 @@ void check_if_alright(pthread_t *thread, t_rules *rules, t_philos *philos)
 	i = -1;
 	while (++i < rules->numb_of_philo)
 		pthread_join(thread[i], NULL);
-	// free_philos(philos);
 }
 
 void	launche_threads(pthread_t *thread, t_rules *rules, t_philos *philos)
