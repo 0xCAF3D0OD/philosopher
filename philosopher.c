@@ -1,16 +1,5 @@
 
 #include "philo.h"
-void	mutex_destroy(t_rules *rules, t_philos *philos)
-{
-	int	i;
-
-	i = -1;
-	while (++i < rules->numb_of_philo)
-	{	
-		pthread_mutex_destroy(philos[i].left_fork_id);
-		pthread_mutex_destroy(philos[i].right_fork_id);
-	}
-}
 
 void	init_info_philos(pthread_mutex_t *fork, t_rules *rules, t_philos *philos)
 {
@@ -22,7 +11,6 @@ void	init_info_philos(pthread_mutex_t *fork, t_rules *rules, t_philos *philos)
 		philos[i].id = i;
 		philos[i].t_last_meal = 0;
 		philos[i].t_sleep = 0;
-		philos[i].timer = 0;
 		philos[i].x_ate = 0;
 		philos[i].is_dead = 0;
 		philos[i].rules = rules;
@@ -41,20 +29,17 @@ void	condition_philosophers(t_data *data, t_rules *rules)
 	t_philos		*philos;
 	pthread_t		*ph_thread;
 	pthread_mutex_t	*fork;
-	(void) data;
 
+	data = malloc(sizeof(t_data) * rules->numb_of_philo);
 	fork = malloc(sizeof(pthread_mutex_t) * rules->numb_of_philo);
-	philos = malloc(sizeof(t_philos) * rules->numb_of_philo);
+	philos = (t_philos*) malloc(sizeof(t_philos) * rules->numb_of_philo);
 	ph_thread = malloc(sizeof(pthread_t) * rules->numb_of_philo);
 	timestamp();
 	init_info_philos(fork, rules, philos);
 	launche_mutex(fork, rules);
 	launche_threads(ph_thread, rules, philos);
-	mutex_destroy(rules, philos);
 	free(fork);
 	free(rules);
-	free(data);
-	free(ph_thread);
 }
 
 void	condition_rules_args(int ac, char **av, t_rules *rules)
@@ -85,11 +70,11 @@ int	main (int argc, char **argv)
 	ret = 0;
 	data = (t_data*) malloc(sizeof(t_data));
 	rules = (t_rules*) malloc(sizeof(t_rules));
-    if ((ret = condition_erreur(argc)) == 1)
-    {
-		ft_print(ret, 0, 0, 0);
-	}
+	// pthread_mutex_init(&essais, NULL);
+    if ((ret = condition_erreur(argc)))
+    	ft_print(ret, 0, 0);
 	condition_rules_args(argc, argv, rules);
 	condition_philosophers(data, rules);
+	// free_philos(data);
 	return (0);
 }

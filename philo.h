@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   philo.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dino <dino@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: kdi-noce <kdi-noce@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/14 15:48:58 by kdi-noce          #+#    #+#             */
-/*   Updated: 2022/06/08 16:15:12 by dino             ###   ########.fr       */
+/*   Updated: 2022/06/06 16:04:54 by kdi-noce         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,6 @@ typedef struct		s_philos
 	int				id;
 	int				x_ate;
 	int				is_dead;
-	int				timer;
 	long long		t_last_meal;
 	long long		t_sleep;
 	pthread_mutex_t	*left_fork_id;
@@ -76,7 +75,7 @@ long long			timestamp(void);
 
 /*	print_philos	*/
 
-void	ft_print(int ret, int i, long long time, int timer);
+void	ft_print(int ret, int i, long long time);
 
 /*	thread_mutex	*/
 

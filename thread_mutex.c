@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   thread_mutex.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dino <dino@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: kdi-noce <kdi-noce@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/24 09:22:16 by kdi-noce          #+#    #+#             */
-/*   Updated: 2022/06/08 17:58:14 by dino             ###   ########.fr       */
+/*   Updated: 2022/06/21 17:37:18 by kdi-noce         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@ void check_if_alright(pthread_t *thread, t_rules *rules, t_philos *philos)
 		{
 			if (check_if_dead(rules, &philos[i], i) == 1)
 			{
+				printf("Philo dead\n");
 				dead_fct(rules, philos);
 				break ;
 			}
@@ -40,7 +41,7 @@ void	launche_threads(pthread_t *thread, t_rules *rules, t_philos *philos)
 	int	i;
 
 	i = -1;
-	ft_print(0, 0, 0, 0);
+	ft_print(0, 0, 0);
 	while (++i < rules->numb_of_philo)
 	{
 		pthread_create(&thread[i], NULL, thread_manager, &philos[i]);
