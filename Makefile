@@ -6,7 +6,7 @@
 #    By: kdi-noce <kdi-noce@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/04/14 09:40:45 by kdi-noce          #+#    #+#              #
-#    Updated: 2022/06/06 14:38:23 by kdi-noce         ###   ########.fr        #
+#    Updated: 2022/06/28 19:04:32 by kdi-noce         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -23,7 +23,8 @@ SRC			= 	philosopher.c	\
 				print_philos.c	\
 				time_philo.c	\
 				fct_annex.c		\
-				ft_routine.c
+				ft_routine.c	\
+				annexe.c
 				
 
 #philo_main.c \

@@ -44,19 +44,24 @@ void	condition_philosophers(t_data *data, t_rules *rules)
 
 void	condition_rules_args(int ac, char **av, t_rules *rules)
 {
-	rules->numb_of_philo = ft_atoi(av[1]);
-	rules->time_to_die = ft_atoi(av[2]);	
-	rules->time_eat = ft_atoi(av[3]);
-	rules->time_to_sleep = ft_atoi(av[4]);
+	rules->numb_of_philo = ft_atoi_long(av[1]);
+	printf("1: %d\n", rules->numb_of_philo);
+	rules->time_to_die = ft_atoi_long(av[2]);	
+	printf("2: %d\n", rules->time_to_die);
+	rules->time_eat = ft_atoi_long(av[3]);
+	printf("3: %d\n", rules->time_eat);
+	rules->time_to_sleep = ft_atoi_long(av[4]);
 	if (ac == 6)
-		rules->nb_time_to_eat = ft_atoi(av[5]);
+		rules->nb_time_to_eat = ft_atoi_long(av[5]);
 	else
 		rules->nb_time_to_eat = -1;
 }
 
-int	condition_erreur(int ac)
+int	condition_erreur(int ac, char **argv)
 {
 	if (ac < 1 || ac > 6)
+		return (1);
+	if (check_argv(argv) != 0)
 		return (1);
 	return (0);
 }
@@ -71,7 +76,7 @@ int	main (int argc, char **argv)
 	data = (t_data*) malloc(sizeof(t_data));
 	rules = (t_rules*) malloc(sizeof(t_rules));
 	// pthread_mutex_init(&essais, NULL);
-    if ((ret = condition_erreur(argc)))
+    if ((ret = condition_erreur(argc, argv)))
     	ft_print(ret, 0, 0);
 	condition_rules_args(argc, argv, rules);
 	condition_philosophers(data, rules);

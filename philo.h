@@ -6,7 +6,7 @@
 /*   By: kdi-noce <kdi-noce@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/14 15:48:58 by kdi-noce          #+#    #+#             */
-/*   Updated: 2022/06/06 16:04:54 by kdi-noce         ###   ########.fr       */
+/*   Updated: 2022/06/28 20:30:07 by kdi-noce         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,11 @@
 # include <stdlib.h>
 # include <unistd.h>
 # include "printf/ft_printf.h"
+
+# define MAX_INT 2147483647
+# define MIN_INT -2147483648
+# define THINK_MSG 10
+
 
 // # define INITIAL_STOCK	20
 // # define NB_CLIENT		5
@@ -62,7 +67,7 @@ int	ft_atoi(char *nptr);
 
 /*	philosopher_main	*/
 
-int		condition_erreur(int ac);
+int		condition_erreur(int ac, char **argv);
 void	condition_rules_args(int ac, char **av, t_rules *rules);
 void	condition_philosophers(t_data *data, t_rules *rules);
 void	init_info_philos(pthread_mutex_t *fork, t_rules *rules, t_philos *philos);
@@ -87,7 +92,7 @@ void	launche_mutex(pthread_mutex_t *fork, t_rules *rules);
 /*	ft_routine	*/
 
 void	ft_routine(t_philos *philos, t_rules *rules);
-void	ft_take_forks(t_philos *philos, t_rules *rules);
+void	ft_take_forks(t_philos *philos);
 void	ft_eat(t_philos *philos, t_rules *rules);
 void	ft_is_sleeping(t_philos *philos);
 void	ft_put_forks(t_philos *philos);
@@ -98,6 +103,13 @@ int		check_if_dead(t_rules *rules, t_philos *philos, int i);
 void	dead_fct(t_rules *rules, t_philos *philos);
 int		eating_nb(t_rules *rules, t_philos *philos);
 void	free_philos(t_philos *philos);
+int		check_argv(char **argv);
+
+int			ft_isdigit(char c);
+long int	ft_atoi_long(const char *str);
+size_t		ft_strlen(const char *s);
+int			chek_digit(char *str);
+int			chek_long(char *str);
 
 #endif
 
