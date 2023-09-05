@@ -33,12 +33,6 @@ void	ft_sleeping(t_philos *philos)
 
 void	ft_eat(t_philos *philo, t_rules *rules)
 {
-	int			time;
-	long long	ret;
-
-	ret = 0;
-	time = timestamp();
-	ret = time - timestamp();
 	if (philo->is_dead == 0)
 		ft_print(7, philo->id, timestamp());
 	philo->x_ate++;
@@ -49,9 +43,6 @@ void	ft_eat(t_philos *philo, t_rules *rules)
 
 void	ft_take_forks(t_philos *philos)
 {
-	static int	i;
-
-	i = 0;
 	pthread_mutex_lock(philos->right_fork_id);
 	if (philos->is_dead == 0)
 		ft_print(4, philos->id, timestamp());

@@ -65,6 +65,7 @@ int	check_argv(char **argv)
 	int	ret;
 
 	i = 1;
+	ret = 0;
 	while (argv[i] != NULL && ret != 1)
 	{
 		ret = chek_digit(argv[i]);

@@ -18,7 +18,7 @@
 # include <sys/time.h>
 # include <stdlib.h>
 # include <unistd.h>
-# include "printf/ft_printf.h"
+# include "../printf/ft_printf.h"
 
 # define MAX_INT 2147483647
 # define MIN_INT -2147483648

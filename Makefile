@@ -16,7 +16,7 @@ PRINTF_DIR	= printf
 PRINTF		= $(PRINTF_DIR)/libftprintf.a
 
 CC		= gcc
-CFLAG		= -Wall -Wextra -Wextra -Werror 
+CFLAG		= -Wall -Wextra -Wextra -Werror -g 
 RM		= rm -rf
 SRCS_DIR	= ./srcs/
 SRC		= philosopher.c		\
